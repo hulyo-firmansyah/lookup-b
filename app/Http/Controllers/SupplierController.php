@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
+use App\Http\Resources\SupplierResource;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SupplierController extends Controller
 {
@@ -36,12 +39,20 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  Request
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(Request $request)
     {
-        //
+        $id = intval($request->id);
+        $supplier = new SupplierResource(Supplier::find($id));
+        if (!$supplier->resource) {
+            return response(['status' => 'false', 'message' => 'Supplier not found', 'data' => null], 404);
+        }
+
+        return response(['status' => 'OK', 'data' => [
+            'supplier' => $supplier
+        ]]);
     }
 
     /**

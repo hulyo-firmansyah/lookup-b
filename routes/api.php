@@ -22,6 +22,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('suppliers')->group(function () {
         Route::get('/', [SupplierController::class, 'index']);
+        Route::get('/{id}', [SupplierController::class, 'show']);
     });
 });
 
