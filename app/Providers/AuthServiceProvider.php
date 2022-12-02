@@ -25,7 +25,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Passport::hashClientSecrets();
+        /**
+         * This require client secret
+         * https://stackoverflow.com/questions/39572957/laravel-passport-password-grant-client-authentication-failed
+         */
+        // Passport::hashClientSecrets();
 
         /** @var CachesRoutes $app */
         $app = $this->app;
