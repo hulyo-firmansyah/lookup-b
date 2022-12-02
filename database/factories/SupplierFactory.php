@@ -14,7 +14,11 @@ class SupplierFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => 'Supplier Kota ' . $this->faker->city,
+            'phone' => "+6285755799604",
+            'email' => $this->faker->unique()->email,
+            'address' => $this->faker->address,
+            'details' => $this->faker->paragraph(2)
         ];
     }
 }
