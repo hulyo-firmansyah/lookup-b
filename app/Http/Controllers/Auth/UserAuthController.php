@@ -21,11 +21,26 @@ class UserAuthController extends Controller
 
         /** @var Any $user */
         $user = auth()->user();
+        //create token or login process
         $token = $user->createToken('RPK-APIToken')->accessToken;
 
 
         return response(['message' => 'Login Success', 'data' => [
             'token' => $token
         ]], 200);
+    }
+
+    /**
+     * Handle logout
+     */
+    public function logout()
+    {
+        /** @var Any */
+        $user = auth()->user();
+        $token = $user->token();
+        // Revoke user token from database
+        $token->revoke();
+
+        return response(['message' => 'Logout Success']);
     }
 }
