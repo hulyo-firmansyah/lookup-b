@@ -44,7 +44,7 @@ class SupplierController extends Controller
      */
     public function show(Request $request)
     {
-        $id = intval($request->id);
+        $id = intval($request->supplier);
         $supplier = new SupplierResource(Supplier::find($id));
         if (!$supplier->resource) {
             return response(['status' => 'false', 'message' => 'Supplier not found', 'data' => null], 404);

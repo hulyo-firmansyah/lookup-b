@@ -20,10 +20,11 @@ Route::post('/login', [UserAuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [UserAuthController::class, 'logout']);
 
-    Route::prefix('suppliers')->group(function () {
-        Route::get('/', [SupplierController::class, 'index']);
-        Route::get('/{id}', [SupplierController::class, 'show']);
-    });
+    // Route::prefix('suppliers')->group(function () {
+    //     // Route::get('/', [SupplierController::class, 'index']);
+    //     // Route::get('/{id}', [SupplierController::class, 'show']);
+    Route::apiResource('suppliers', SupplierController::class);
+    // });
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
