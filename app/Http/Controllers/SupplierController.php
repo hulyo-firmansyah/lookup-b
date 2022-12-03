@@ -70,9 +70,12 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSupplierRequest $request, Supplier $supplier)
+    public function update(UpdateSupplierRequest $request)
     {
-        //
+        $id = intval($request->supplier);
+        $supplier = Supplier::find($id)->update($request->all());
+
+        return response(['status' => 'OK', 'message' => 'Update supplier success', 'data' => $supplier]);
     }
 
     /**
