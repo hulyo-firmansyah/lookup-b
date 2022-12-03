@@ -33,7 +33,15 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        //
+        $supplier = Supplier::create($request->all());
+
+        return response([
+            'status' => 'OK',
+            'message' => 'Input supplier data success',
+            'data' => [
+                'supplier' => $supplier
+            ]
+        ]);
     }
 
     /**
