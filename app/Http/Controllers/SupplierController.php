@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
-use App\Http\Requests\StoreSupplierRequest;
-use App\Http\Requests\UpdateSupplierRequest;
+use App\Http\Requests\Data\Supplier\StoreSupplierRequest;
+use App\Http\Requests\Data\Supplier\UpdateSupplierRequest;
 use App\Http\Resources\SupplierResource;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -28,7 +28,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreSupplierRequest  $request
+     * @param  \App\Http\Requests\Data\Supplier\StoreSupplierRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreSupplierRequest $request)
@@ -66,7 +66,7 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateSupplierRequest  $request
+     * @param  \App\Http\Requests\Data\Supplier\UpdateSupplierRequest  $request
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
