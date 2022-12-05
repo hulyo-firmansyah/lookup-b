@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Data\Category;
+namespace App\Http\Requests\Data\SubCategory;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class StoreCategoryRequest extends FormRequest
+class StoreSubCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,7 +39,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('categories')],
+            'name' => ['required', Rule::unique('sub_categories')],
             // 'details' => ['required']
         ];
     }
