@@ -52,7 +52,9 @@ class SubCategoryController extends Controller
             return response([
                 'status' => false,
                 'message' => 'Sub category not found',
-                'data' => null
+                'data' => [
+                    'sub_category' => null
+                ]
             ], 404);
         }
 
@@ -93,10 +95,14 @@ class SubCategoryController extends Controller
         $id = intval($request->sub_category);
         $sub_category = SubCategory::find($id);
         if (!$sub_category) {
-            return response(['status' => false, 'message' => 'Sub category not found'], 404);
+            return response(['status' => false, 'message' => 'Sub category not found', 'data' => [
+                'sub_category' => null
+            ]], 404);
         }
         $sub_category->delete();
 
-        return response(['status' => 'OK', 'message' => 'Delete sub category success', 'data' => $sub_category], 200);
+        return response(['status' => 'OK', 'message' => 'Delete sub category success', 'data' => [
+            'sub_category' => $sub_category
+        ]], 200);
     }
 }
