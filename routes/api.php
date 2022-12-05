@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,12 @@ Route::middleware('auth:api')->group(function () {
     // Route::prefix('suppliers')->group(function () {
     //     // Route::get('/', [SupplierController::class, 'index']);
     //     // Route::get('/{id}', [SupplierController::class, 'show']);
+
+    //CRUD DATA
     Route::apiResource('suppliers', SupplierController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('brands', BrandController::class);
+    Route::apiResource('warehouses', WarehouseController::class);
+
     // });
 });
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
