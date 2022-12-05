@@ -49,11 +49,13 @@ class WarehouseController extends Controller
         $id = intval($request->warehouse);
         $warehouse = Warehouse::find($id);
         if (!$warehouse) {
-            return response(['status' => false, 'message' => 'Warehouse not found', 'data' => null]);
+            return response(['status' => false, 'message' => 'Warehouse not found', 'data' => [
+                'warehouse' => null
+            ]]);
         }
 
         return response(['status' => 'OK', 'data' => [
-            $warehouse
+            'warehouse' => $warehouse
         ]], 200);
     }
 
@@ -86,10 +88,14 @@ class WarehouseController extends Controller
         $id = intval($request->warehouse);
         $warehouse = Warehouse::find($id);
         if (!$warehouse) {
-            return response(['status' => false, 'message' => 'Warehouse not found'], 404);
+            return response(['status' => false, 'message' => 'Warehouse not found', 'data' => [
+                'warehouse' => null
+            ]], 404);
         }
         $warehouse->delete();
 
-        return response(['status' => 'OK', 'message' => 'Delete warehouse success', 'data' => $warehouse], 200);
+        return response(['status' => 'OK', 'message' => 'Delete warehouse success', 'data' => [
+            'warehouse' => $warehouse
+        ]], 200);
     }
 }

@@ -88,10 +88,14 @@ class BrandController extends Controller
         $id = intval($request->brand);
         $brand = Brand::find($id);
         if (!$brand) {
-            return response(['status' => false, 'message' => 'Brand not found'], 404);
+            return response(['status' => false, 'message' => 'Brand not found', 'data' => [
+                'brand' => null
+            ]], 404);
         }
         $brand->delete();
 
-        return response(['status' => 'OK', 'message' => 'Delete brand success', 'data' => $brand], 200);
+        return response(['status' => 'OK', 'message' => 'Delete brand success', 'data' => [
+            'brand' => $brand
+        ]], 200);
     }
 }

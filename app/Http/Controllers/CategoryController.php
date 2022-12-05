@@ -52,7 +52,9 @@ class CategoryController extends Controller
             return response([
                 'status' => false,
                 'message' => 'Category not found',
-                'data' => null
+                'data' => [
+                    'category' => null
+                ]
             ], 404);
         }
 
@@ -93,10 +95,14 @@ class CategoryController extends Controller
         $id = intval($request->category);
         $category = Category::find($id);
         if (!$category) {
-            return response(['status' => false, 'message' => 'Category not found'], 404);
+            return response(['status' => false, 'message' => 'Category not found', 'data' => [
+                'category' => null
+            ]], 404);
         }
         $category->delete();
 
-        return response(['status' => 'OK', 'message' => 'Delete category success', 'data' => $category], 200);
+        return response(['status' => 'OK', 'message' => 'Delete category success', 'data' => [
+            'category' => $category
+        ]], 200);
     }
 }

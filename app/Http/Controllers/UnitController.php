@@ -53,7 +53,9 @@ class UnitController extends Controller
         $id = intval($request->unit);
         $unit = Unit::find($id);
         if (!$unit) {
-            return response(['status' => false, 'message' => 'Unit not found', 'data' => null], 404);
+            return response(['status' => false, 'message' => 'Unit not found', 'data' => [
+                'unit' => null
+            ]], 404);
         }
 
         return response(['status' => 'OK', 'data' => [
@@ -93,7 +95,9 @@ class UnitController extends Controller
         $id = intval($request->unit);
         $unit = Unit::find($id);
         if (!$unit) {
-            return response(['status' => false, 'message' => 'Unit not found'], 404);
+            return response(['status' => false, 'message' => 'Unit not found', 'data' => [
+                'unit' => null
+            ]], 404);
         }
         $unit->delete();
 

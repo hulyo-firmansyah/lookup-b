@@ -54,7 +54,9 @@ class SupplierController extends Controller
         $id = intval($request->supplier);
         $supplier = new SupplierResource(Supplier::find($id));
         if (!$supplier->resource) {
-            return response(['status' => false, 'message' => 'Supplier not found', 'data' => null], 404);
+            return response(['status' => false, 'message' => 'Supplier not found', 'data' => [
+                'supplier' => null
+            ]], 404);
         }
 
         return response(['status' => 'OK', 'data' => [
@@ -74,7 +76,9 @@ class SupplierController extends Controller
         $id = intval($request->supplier);
         $supplier = Supplier::find($id)->update($request->all());
 
-        return response(['status' => 'OK', 'message' => 'Update supplier success', 'data' => $supplier]);
+        return response(['status' => 'OK', 'message' => 'Update supplier success', 'data' => [
+            'supplier' => $supplier
+        ]]);
     }
 
     /**
@@ -88,10 +92,14 @@ class SupplierController extends Controller
         $id = intval($request->supplier);
         $supplier = Supplier::find($id);
         if (!$supplier) {
-            return response(['status' => false, 'message' => 'Supplier not found'], 404);
+            return response(['status' => false, 'message' => 'Supplier not found', 'data' => [
+                'supplier' => null
+            ]], 404);
         }
         $supplier->delete();
 
-        return response(['status' => 'OK', 'message' => 'Delete supplier success', 'data' => $supplier], 200);
+        return response(['status' => 'OK', 'message' => 'Delete supplier success', 'data' => [
+            'supplier' => $supplier
+        ]], 200);
     }
 }
