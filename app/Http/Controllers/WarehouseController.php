@@ -15,7 +15,11 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        return response(['ok'], 200);
+        $warehouses = Warehouse::all();
+
+        return response(['status' => 'OK', 'data' => [
+            'warehouses' => $warehouses
+        ]], 200);
     }
 
     /**
