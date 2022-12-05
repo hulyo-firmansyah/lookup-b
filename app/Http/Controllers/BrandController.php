@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Http\Requests\Data\Brand\StoreBrandRequest;
 use App\Http\Requests\Data\Brand\UpdateBrandRequest;
+use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
@@ -39,9 +40,19 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Request $request)
     {
-        //
+        $id = intval($request->brand);
+        $brand = Brand::find($id);
+        if (!$brand) {
+            return response(['status' => 'OK', 'data' => [
+                'brand' => null
+            ]], 404);
+        }
+
+        return response(['status' => 'OK', 'data' => [
+            'brand' => $brand
+        ]]);
     }
 
     /**
