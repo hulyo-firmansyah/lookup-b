@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,8 @@ use App\Http\Controllers\Auth\UserAuthController;
 Route::post('/login', [UserAuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::middleware('auth:api')->post('/logout', [UserAuthController::class, 'logout']);
-});
+    Route::post('/logout', [UserAuthController::class, 'logout']);
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+    //CRUD DATA
+    Route::apiResource('warehouses', WarehouseController::class);
+});
