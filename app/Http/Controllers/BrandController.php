@@ -31,7 +31,11 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        $brand = Brand::create($request->all());
+
+        return response(['status' => 'OK', 'message' => 'Success', 'data' => [
+            'brand' => $brand
+        ]]);
     }
 
     /**
@@ -62,9 +66,15 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBrandRequest $request, Brand $brand)
+    public function update(UpdateBrandRequest $request)
     {
-        //
+        $id = intval($request->brand);
+        $brand = Brand::find($id);
+        $brand->update($request->all());
+
+        return response(['status' => 'OK', 'message' => 'Update brand success', 'data' => [
+            'brand' => $brand
+        ]], 200);
     }
 
     /**
@@ -73,8 +83,15 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Request $request)
     {
-        //
+        $id = intval($request->brand);
+        $brand = Brand::find($id);
+        if (!$brand) {
+            return response(['status' => false, 'message' => 'Brand not found'], 404);
+        }
+        $brand->delete();
+
+        return response(['status' => 'OK', 'message' => 'Delete brand success', 'data' => $brand], 200);
     }
 }

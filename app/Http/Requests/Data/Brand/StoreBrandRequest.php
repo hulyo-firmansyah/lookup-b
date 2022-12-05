@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Data\Brand;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreBrandRequest extends FormRequest
 {
@@ -13,7 +15,19 @@ class StoreBrandRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        $role = auth()->user()->role;
+        switch ($role) {
+            case 'dev': {
+                }
+            case 'owner': {
+                }
+            case 'admin': {
+                    return true;
+                }
+            default: {
+                    return false;
+                }
+        }
     }
 
     /**
@@ -24,7 +38,19 @@ class StoreBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'unique:brands'],
+            // 'details' => ['required']
         ];
+    }
+
+    /**
+     * Catch failed validation
+     */
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response([
+            'message'   => 'Bad Request',
+            'data'      => $validator->errors()
+        ], 400));
     }
 }
