@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Supplier;
+use App\Models\Unit;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Warehouse;
@@ -25,5 +26,6 @@ class DatabaseSeeder extends Seeder
         Warehouse::factory(10)->create();
         Category::factory(10)->create();
         SubCategory::factory(10)->create();
+        Unit::factory(10)->create();
     }
 }
