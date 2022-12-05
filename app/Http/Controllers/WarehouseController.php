@@ -15,7 +15,7 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        //
+        return response(['ok'], 200);
     }
 
     /**
