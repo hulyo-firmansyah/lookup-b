@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Warehouse;
-use App\Http\Requests\StoreWarehouseRequest;
-use App\Http\Requests\UpdateWarehouseRequest;
+use App\Http\Requests\Data\Warehouse\StoreWarehouseRequest;
+use App\Http\Requests\Data\Warehouse\UpdateWarehouseRequest;
 
 class WarehouseController extends Controller
 {
