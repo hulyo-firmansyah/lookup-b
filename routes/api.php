@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware('auth:api')->group(function () {
     //     // Route::get('/', [SupplierController::class, 'index']);
     //     // Route::get('/{id}', [SupplierController::class, 'show']);
     Route::apiResource('suppliers', SupplierController::class);
+    Route::apiResource('categories', CategoryController::class);
     // });
 });
 
