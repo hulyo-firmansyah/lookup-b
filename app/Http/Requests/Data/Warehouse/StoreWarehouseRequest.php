@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Data\Warehouse;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreWarehouseRequest extends FormRequest
 {
@@ -13,7 +15,19 @@ class StoreWarehouseRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        $role = auth()->user()->role;
+        switch ($role) {
+            case 'dev': {
+                }
+            case 'owner': {
+                }
+            case 'admin': {
+                    return true;
+                }
+            default: {
+                    return false;
+                }
+        }
     }
 
     /**
@@ -24,7 +38,17 @@ class StoreWarehouseRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'unique:warehouses', 'max:255'],
+            'address' => ['required'],
+            // 'details' => ['']
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response([
+            'message'   => 'Bad Request',
+            'data'      => $validator->errors()
+        ], 400));
     }
 }

@@ -31,7 +31,11 @@ class WarehouseController extends Controller
      */
     public function store(StoreWarehouseRequest $request)
     {
-        //
+        $warehouse = Warehouse::create($request->all());
+
+        return response(['status' => 'OK', 'message' => 'Success', 'data' => [
+            'warehouse' => $warehouse
+        ]]);
     }
 
     /**
