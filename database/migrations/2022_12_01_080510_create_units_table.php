@@ -16,6 +16,7 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255)->comment('example: gram,pack,box,unit,pcs');
+            $table->text('details')->comment('detail for unit type')->nullable();
             $table->timestamps();
         });
     }
