@@ -64,9 +64,15 @@ class WarehouseController extends Controller
      * @param  \App\Models\Warehouse  $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse)
+    public function update(UpdateWarehouseRequest $request)
     {
-        //
+        $id = intval($request->warehouse);
+        $warehouse = Warehouse::find($id);
+        $warehouse->update($request->all());
+
+        return response(['status' => 'OK', 'message' => 'Update warehouse success', 'data' => [
+            'warehouse' => $warehouse
+        ]], 200);
     }
 
     /**
