@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,13 @@ use App\Http\Controllers\Auth\UserAuthController;
 Route::post('/login', [UserAuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::middleware('auth:api')->post('/logout', [UserAuthController::class, 'logout']);
+    Route::post('/logout', [UserAuthController::class, 'logout']);
+
+    // Route::prefix('suppliers')->group(function () {
+    //     // Route::get('/', [SupplierController::class, 'index']);
+    //     // Route::get('/{id}', [SupplierController::class, 'show']);
+    Route::apiResource('suppliers', SupplierController::class);
+    // });
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
