@@ -81,8 +81,15 @@ class WarehouseController extends Controller
      * @param  \App\Models\Warehouse  $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Warehouse $warehouse)
+    public function destroy(Request $request)
     {
-        //
+        $id = intval($request->warehouse);
+        $warehouse = Warehouse::find($id);
+        if (!$warehouse) {
+            return response(['status' => false, 'message' => 'Warehouse not found'], 404);
+        }
+        $warehouse->delete();
+
+        return response(['status' => 'OK', 'message' => 'Delete warehouse success', 'data' => $warehouse], 200);
     }
 }
