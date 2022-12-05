@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Warehouse;
 use App\Http\Requests\Data\Warehouse\StoreWarehouseRequest;
 use App\Http\Requests\Data\Warehouse\UpdateWarehouseRequest;
+use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
@@ -39,9 +40,17 @@ class WarehouseController extends Controller
      * @param  \App\Models\Warehouse  $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function show(Warehouse $warehouse)
+    public function show(Request $request)
     {
-        //
+        $id = intval($request->warehouse);
+        $warehouse = Warehouse::find($id);
+        if (!$warehouse) {
+            return response(['status' => false, 'message' => 'Warehouse not found', 'data' => null]);
+        }
+
+        return response(['status' => 'OK', 'data' => [
+            $warehouse
+        ]], 200);
     }
 
     /**
