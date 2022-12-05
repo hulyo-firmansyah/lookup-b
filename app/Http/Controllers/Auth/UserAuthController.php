@@ -16,7 +16,7 @@ class UserAuthController extends Controller
         $data = $request->only(['email', 'password']);
 
         if (!auth()->attempt($data)) {
-            return response(['message' => 'Invalid Credentials', 401]);
+            return response(['message' => 'Invalid Credentials'], 401);
         }
 
         /** @var Any $user */
