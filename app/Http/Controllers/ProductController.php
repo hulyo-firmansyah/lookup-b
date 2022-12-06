@@ -79,9 +79,19 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request)
     {
-        //
+        $id = intval($request->product);
+        $product = Product::find($id);
+        $data = $request->all();
+        unset($data['serial_number']);
+        $product->update($data);
+
+        $newProduct = new ProductResource($product);
+
+        return response(['status' => 'OK', 'message' => 'Update product success', 'data' => [
+            'product' => $newProduct
+        ]]);
     }
 
     /**
