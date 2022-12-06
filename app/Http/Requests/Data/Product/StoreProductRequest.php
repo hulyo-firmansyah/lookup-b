@@ -48,7 +48,8 @@ class StoreProductRequest extends FormRequest
             'warehouse_id' => ['required', 'numeric'],
             'unit_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
-            'sub_category_id' => ['required', 'numeric']
+            'sub_category_id' => ['required', 'numeric'],
+            'image' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image']
         ];
     }
 
