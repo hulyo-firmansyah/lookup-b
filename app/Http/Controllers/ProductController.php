@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Http\Requests\Data\Product\StoreProductRequest;
 use App\Http\Requests\Data\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -40,9 +41,26 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Request $request)
     {
-        //
+        $id = intval($request->product);
+        $productModel = Product::find($id);
+        if (!$productModel) {
+            return response([
+                'status' => false,
+                'message' => 'Product not found',
+                'data' => [
+                    'product' => null
+                ]
+            ], 404);
+        }
+
+        $product = new ProductResource($productModel);
+
+        return response([
+            'status' => 'OK',
+            'data' => compact('product')
+        ]);
     }
 
     /**
