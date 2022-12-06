@@ -100,8 +100,20 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request)
     {
-        //
+        $id = intval($request->product);
+        $product = Product::find($id);
+        if (!$product) {
+            return response(['status' => false, 'message' => 'Product not found', 'data' => [
+                'product' => null
+            ]], 404);
+        }
+        $productRes = new ProductResource($product);
+        $product->delete();
+
+        return response(['status' => 'OK', 'message' => 'Delete product success', 'data' => [
+            'product' => $productRes
+        ]], 200);
     }
 }
