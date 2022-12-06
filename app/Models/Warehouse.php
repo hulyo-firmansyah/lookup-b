@@ -17,4 +17,12 @@ class Warehouse extends Model
     protected $fillable = [
         'name', 'address', 'details'
     ];
+
+    /**
+     * Get the products for the brands
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
