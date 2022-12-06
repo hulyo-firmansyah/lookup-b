@@ -32,7 +32,16 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create($request->all());
+        if (!$product) {
+            return response(['status' => false, 'message' => 'Create product failed'], 500);
+        }
+
+        $newProduct = new ProductResource(Product::find($product->id));
+
+        return response(['status' => 'OK', 'message' => 'Create product success', 'data' => [
+            'product' => $newProduct
+        ]]);
     }
 
     /**

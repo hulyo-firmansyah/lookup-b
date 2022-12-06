@@ -17,7 +17,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'product_code' => $this->product_code,
-            'serial_number' => $this->serial_number,
+            'serial_number' => str_pad(strval($this->serial_number), 8, '0', STR_PAD_LEFT),
             'product_name' => $this->product_name,
             'qty' => $this->qty,
             'price' => $this->price,

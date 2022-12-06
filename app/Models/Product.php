@@ -9,13 +9,40 @@ class Product extends Model
 {
     use HasFactory;
 
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $latestProduct = Product::orderBy('id', 'desc')->first();
+            $id = !$latestProduct ? 0 : ($latestProduct->id + 1);
+            $model->serial_number = $id;
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'product_code', 'serial_number', 'qty'
+        'product_code',
+        'serial_number',
+        'qty',
+        'product_name',
+        'price',
+        'brand_id',
+        'supplier_id',
+        'warehouse_id',
+        'unit_id',
+        'category_id',
+        'sub_category_id'
     ];
 
     /**
