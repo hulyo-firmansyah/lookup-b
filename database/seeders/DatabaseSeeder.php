@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\Supplier;
 use App\Models\Unit;
@@ -27,5 +28,6 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
         SubCategory::factory(10)->create();
         Unit::factory(10)->create();
+        Product::factory(100)->create();
     }
 }

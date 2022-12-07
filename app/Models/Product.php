@@ -46,6 +46,14 @@ class Product extends Model
     ];
 
     /**
+     * Get all images avaialable
+     */
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    /**
      * Get related brand
      */
     public function brand()

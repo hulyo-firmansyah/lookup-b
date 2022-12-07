@@ -17,6 +17,7 @@ class CreateProductsSpecsTable extends Migration
             $table->id();
             $table->foreignId('spec_id')->constrained('specs')->onDelete('restrict')->onUpdate('restrict');
             $table->foreignId('product_id')->constrained('products')->onDelete('restrict')->onUpdate('restrict');
+            $table->string('value', 255)->comment('Value for specs');
             $table->timestamps();
         });
     }
