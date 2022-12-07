@@ -7,6 +7,8 @@ use App\Http\Requests\Data\Product\StoreProductRequest;
 use App\Http\Requests\Data\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\ProductImage;
+use App\Models\ProductSpec;
+use App\Models\Spec;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -38,10 +40,35 @@ class ProductController extends Controller
             return response(['status' => false, 'message' => 'Create product failed'], 500);
         }
 
+        // Insert and link images
         $images = $request->file('images');
         if ($images) {
             foreach ($images as $img) {
                 $this->storeImage($product->id, $img);
+            }
+        }
+        // Insert specs
+        if ($request->specs) {
+            $specs = $request->specs;
+            foreach ($specs as $spec) {
+                if (is_int($spec->spec)) {
+                    ProductSpec::create([
+                        "spec_id" => $spec->spec,
+                        "product_id" => $product->id,
+                        "value" => $spec->value
+                    ]);
+                } else {
+                    $newSpec = Spec::create([
+                        'spec' => $spec->spec,
+                        'details' => $spec->desc
+                    ]);
+
+                    ProductSpec::create([
+                        "spec_id" => $newSpec->id,
+                        "product_id" => $product->id,
+                        "value" => $spec->value
+                    ]);
+                }
             }
         }
 
@@ -92,8 +119,8 @@ class ProductController extends Controller
         $id = intval($request->product);
         $product = Product::find($id);
         $data = $request->all();
-        //unset serial_number key from $request if exist
-        //because this can make serial numeber editable
+        // unset serial_number key from $request if exist
+        // because this can make serial numeber editable
         unset($data['serial_number']);
         $product->update($data);
 
@@ -109,6 +136,35 @@ class ProductController extends Controller
         if ($images) {
             foreach ($images as $img) {
                 $this->storeImage($id, $img);
+            }
+        }
+
+        $specs = $request->specs;
+        if ($specs) {
+            //delete old specs
+            $oldSpecs = $product->pivotSpec();
+            $oldSpecs->delete();
+
+            //assign new specs
+            foreach ($specs as $spec) {
+                if (is_int($spec->spec)) {
+                    ProductSpec::create([
+                        "spec_id" => $spec->spec,
+                        "product_id" => $product->id,
+                        "value" => $spec->value
+                    ]);
+                } else {
+                    $newSpec = Spec::create([
+                        'spec' => $spec->spec,
+                        'details' => $spec->desc
+                    ]);
+
+                    ProductSpec::create([
+                        "spec_id" => $newSpec->id,
+                        "product_id" => $product->id,
+                        "value" => $spec->value
+                    ]);
+                }
             }
         }
 

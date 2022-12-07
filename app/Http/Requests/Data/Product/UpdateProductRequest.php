@@ -3,9 +3,11 @@
 namespace App\Http\Requests\Data\Product;
 
 use App\Models\Product;
+use App\Rules\ProductSpecRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
@@ -66,7 +68,8 @@ class UpdateProductRequest extends FormRequest
             'unit_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
             'sub_category_id' => ['required', 'numeric'],
-            'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image']
+            'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image'],
+            'specs' => ['json', new ProductSpecRule]
         ];
     }
 
@@ -79,5 +82,21 @@ class UpdateProductRequest extends FormRequest
             'message'   => 'Bad Request',
             'data'      => $validator->errors()
         ], 400));
+    }
+
+    /**
+     * After passs  validation
+     */
+    public function passedValidation()
+    {
+        if ($this->specs) {
+            $collection = new Collection([]);
+            $rawSpecs = json_decode($this->specs);
+            foreach ($rawSpecs as $rawSpec) {
+                $collection->push($rawSpec);
+            }
+
+            $this->specs = $collection;
+        }
     }
 }
