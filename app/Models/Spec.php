@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Warehouse extends Model
+class Spec extends Model
 {
     use HasFactory;
+
+    protected $table = 'specs';
 
     /**
      * The attributes that are mass assignable.
@@ -15,14 +17,15 @@ class Warehouse extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'address', 'details'
+        'spec',
+        'details',
     ];
 
     /**
-     * Get the products for the brands
+     * Get related products
      */
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class, 'products_specs');
     }
 }

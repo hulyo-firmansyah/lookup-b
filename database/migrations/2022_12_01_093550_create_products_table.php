@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->id('id');
             $table->string('product_code', 255)->comment('example MDB01. purpose is for product code or SKU');
             $table->integer('serial_number')->comment('for nomer urut or. cannot nullable, generate this automatically by system');
+            $table->string('product_name', 300)->comment('product name');
             $table->integer('qty')->comment('quantity or stock')->nullable()->default(0);
             $table->integer('price')->comment('product price');
             $table->foreignId('brand_id')->constrained('brands')->onDelete('restrict')->onUpdate('restrict');

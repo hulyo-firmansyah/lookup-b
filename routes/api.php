@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\WarehouseController;
@@ -36,6 +37,7 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('warehouses', WarehouseController::class);
     Route::apiResource('sub-categories', SubCategoryController::class);
     Route::apiResource('units', UnitController::class);
+    Route::apiResource('products', ProductController::class);
 
     // });
 });

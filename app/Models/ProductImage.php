@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Warehouse extends Model
+class ProductImage extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,17 @@ class Warehouse extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'address', 'details'
+        'path',
+        'filename',
+        'ext',
+        'product_id'
     ];
 
     /**
-     * Get the products for the brands
+     * Get related product
      */
-    public function products()
+    public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

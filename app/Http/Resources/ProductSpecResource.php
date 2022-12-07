@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SupplierResource extends JsonResource
+class ProductSpecResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,11 @@ class SupplierResource extends JsonResource
      */
     public function toArray($request)
     {
+        $spec = new SpecResource($this->spec);
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "phone" => $this->phone,
-            "email" => $this->email,
-            "address" => $this->address,
-            "details" => $this->details,
+            'spec' => $spec->spec,
+            'details' => $spec->details,
+            'value' => $this->value
         ];
     }
 }
