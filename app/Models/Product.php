@@ -100,4 +100,20 @@ class Product extends Model
     {
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
+
+    /**
+     * Get specs
+     */
+    public function specs()
+    {
+        return $this->belongsToMany(Spec::class, 'products_specs');
+    }
+
+    /**
+     * Get into ProductSpec pivot table
+     */
+    public function pivotSpec()
+    {
+        return $this->hasMany(ProductSpec::class);
+    }
 }
