@@ -49,7 +49,7 @@ class StoreProductRequest extends FormRequest
             'unit_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
             'sub_category_id' => ['required', 'numeric'],
-            'image' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image']
+            'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image']
         ];
     }
 
