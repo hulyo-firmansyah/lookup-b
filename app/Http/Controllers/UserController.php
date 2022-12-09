@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Http\Requests\Data\User\StoreUserRequest;
 use App\Http\Requests\Data\User\UpdateUserRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
@@ -35,7 +34,13 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $user = User::create($request->all());
+
+        return response([
+            'status' => 'OK',
+            'message' => 'Input user data success',
+            'data' => compact('user')
+        ]);
     }
 
     /**

@@ -13,6 +13,21 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            //Bypass email verification
+            $model->email_verified_at = now();
+        });
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

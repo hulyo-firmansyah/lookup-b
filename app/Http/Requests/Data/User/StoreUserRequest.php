@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Data\User;
 
+use App\Rules\UserPasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -37,7 +40,18 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'min:5', 'max:255', Rule::unique('users')],
+            'email' => ['required', 'email', Rule::unique('users')],
+            'password' => ['required', 'min:4', 'max:255', new UserPasswordRule]
         ];
+    }
+
+    /**
+     * After passs  validation
+     */
+    public function passedValidation()
+    {
+        $pass = bcrypt($this->password);
+        $this['password'] = $pass;
     }
 }
