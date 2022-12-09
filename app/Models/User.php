@@ -38,4 +38,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Determeni if user is dev
+     */
+    public function isDev()
+    {
+        return $this->role === 'dev' ? true : false;
+    }
+
+    /**
+     * Determeni if user is owner
+     */
+    public function isOwner()
+    {
+        return $this->role === 'owner' ? true : false;
+    }
+
+    /**
+     * Determeni if user is admin
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin' ? true : false;
+    }
 }
