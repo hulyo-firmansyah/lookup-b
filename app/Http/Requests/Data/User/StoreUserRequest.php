@@ -4,7 +4,7 @@ namespace App\Http\Requests\Data\User;
 
 use App\Rules\UserPasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest

@@ -76,9 +76,22 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request)
     {
-        //
+        $id = intval($request->user);
+        $user = User::find($id);
+        $response = Gate::allows('update', [$user]);
+        if (!$response) {
+            return response(['status' => false, 'message' => 'Forbidden'], 403);
+        }
+
+        $user->update($request->all());
+
+        return response([
+            'status' => 'OK',
+            'message'  => 'Update user success',
+            'data' => compact('user')
+        ]);
     }
 
     /**
@@ -87,8 +100,29 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
-        //
+        $id = intval($request->user);
+        $user = User::find($id);
+        if (!$user) {
+            return response(['status' => false, 'message' => 'User not found', 'data' => [
+                'user' => null
+            ]], 404);
+        }
+
+        $response = Gate::allows('delete', $user);
+        if (!$response) {
+            return response(['status' => false, 'message' => 'Forbidden'], 403);
+        }
+
+        foreach ($user->tokens as $token) {
+            $token->revoke();
+        }
+
+        $user->delete();
+
+        return response(['status' => 'OK', 'message' => 'User unit success', 'data' => [
+            'user' => $user
+        ]], 200);
     }
 }

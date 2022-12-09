@@ -58,7 +58,29 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        switch ($user->role) {
+            case 'dev': {
+                    return true;
+                }
+            case 'owner': {
+                    if ($model->isOwner()) {
+                        return $user->id === $model->id;
+                    }
+                    if ($model->isDev()) {
+                        return false;
+                    }
+                    return true;
+                }
+            case 'admin': {
+                    if ($model->isAdmin()) {
+                        return $user->id === $model->id;
+                    }
+
+                    return false;
+                }
+        }
+
+        return false;
     }
 
     /**
@@ -70,7 +92,25 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        switch ($user->role) {
+                //dev can do everything
+            case 'dev': {
+                    return true;
+                }
+                //owner can delete admin, but cannot delete other owner
+            case 'owner': {
+                    if ($model->isAdmin()) {
+                        return true;
+                    }
+                    return false;
+                }
+                //admin cannot do everything
+            case 'admin': {
+                    return false;
+                }
+        }
+
+        return false;
     }
 
     /**
