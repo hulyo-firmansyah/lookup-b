@@ -26,7 +26,8 @@ class UserAuthController extends Controller
 
 
         return response(['message' => 'Login Success', 'data' => [
-            'token' => $token
+            'token' => $token,
+            'user' => $user->only(['name', 'email', 'role'])
         ]], 200);
     }
 
