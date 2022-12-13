@@ -56,7 +56,7 @@ class UpdateSupplierRequest extends FormRequest
             'name' => ['required', 'max:255', Rule::unique('suppliers')->ignore($this->supplier)],
             'phone' => 'integer|digits_between:2,15',
             'email' => 'email',
-            // 'address' => '',
+            'address' => 'required',
             // 'details' => ''
         ];
     }
