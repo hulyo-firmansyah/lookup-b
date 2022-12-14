@@ -37,8 +37,8 @@ class ProductFactory extends Factory
         $warehouse = $this->faker->randomElement($warehouses);
         $units = Unit::all();
         $unit = $this->faker->randomElement($units);
-        $categories = Category::all();
-        $category = $this->faker->randomElement($categories);
+        // $categories = Category::all();
+        // $category = $this->faker->randomElement($categories);
         $sub_categories = SubCategory::all();
         $sub_category = $this->faker->randomElement($sub_categories);
 
@@ -52,7 +52,7 @@ class ProductFactory extends Factory
             'supplier_id' => $supplier->id,
             'warehouse_id' => $warehouse->id,
             'unit_id' => $unit->id,
-            'category_id' => $category->id,
+            // 'category_id' => $category->id,
             'sub_category_id' => $sub_category->id
         ];
     }

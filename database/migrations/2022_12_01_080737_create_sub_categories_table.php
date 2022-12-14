@@ -17,6 +17,7 @@ class CreateSubCategoriesTable extends Migration
             $table->id();
             $table->string('name', 255)->comment('example: bed, kursi roda, tiang infus, dll');
             $table->text('details')->comment('for detail')->nullable();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
     }
