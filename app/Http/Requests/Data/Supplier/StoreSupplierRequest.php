@@ -40,7 +40,7 @@ class StoreSupplierRequest extends FormRequest
         return [
             'name' => 'required|max:255|unique:suppliers',
             'phone' => 'integer|digits_between:2,15',
-            'email' => 'email',
+            'email' => 'nullable|email',
             'address' => 'required',
             // 'details' => ''
         ];
