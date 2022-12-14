@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = CategoryResource::collection(Category::all());
+        $categories = CategoryResource::collection(Category::all()->load('subCategories'));
 
         return response(['status' => 'OK', 'data' => [
             'categories' => $categories
@@ -59,7 +59,7 @@ class CategoryController extends Controller
             ], 404);
         }
 
-        $category = new CategoryResource($categoryModel);
+        $category = new CategoryResource($categoryModel->load('subCategories'));
 
         return response([
             'status' => 'OK',

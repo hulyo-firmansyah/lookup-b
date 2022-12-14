@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SubCategory;
 use App\Http\Requests\Data\SubCategory\StoreSubCategoryRequest;
 use App\Http\Requests\Data\SubCategory\UpdateSubCategoryRequest;
+use App\Http\Resources\SubCategoryResource;
 use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
@@ -16,7 +17,7 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $sub_categories = SubCategory::all();
+        $sub_categories = SubCategoryResource::collection(SubCategory::all()->load('category'));
 
         return response(['status' => 'OK', 'data' => [
             'sub_categories' => $sub_categories
@@ -47,8 +48,8 @@ class SubCategoryController extends Controller
     public function show(Request $request)
     {
         $id = intval($request->sub_category);
-        $subCategory = SubCategory::find($id);
-        if (!$subCategory) {
+        $subCategoryModel = SubCategory::find($id);
+        if (!$subCategoryModel) {
             return response([
                 'status' => false,
                 'message' => 'Sub category not found',
@@ -57,6 +58,8 @@ class SubCategoryController extends Controller
                 ]
             ], 404);
         }
+
+        $subCategory = new SubCategoryResource($subCategoryModel->load('category'));
 
         return response([
             'status' => 'OK',
