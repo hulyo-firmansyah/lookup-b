@@ -41,7 +41,6 @@ class Product extends Model
         'supplier_id',
         'warehouse_id',
         'unit_id',
-        'category_id',
         'sub_category_id'
     ];
 
@@ -88,10 +87,10 @@ class Product extends Model
     /**
      * Get related category
      */
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id');
-    }
+    // public function category()
+    // {
+    //     return $this->belongsTo(Category::class, 'category_id');
+    // }
 
     /**
      * Get related sub category
