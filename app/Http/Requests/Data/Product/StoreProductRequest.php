@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Data\Product;
 
 use App\Rules\ProductSpecRule;
+use App\Rules\ProductSubCategoryRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -49,8 +50,8 @@ class StoreProductRequest extends FormRequest
             'supplier_id' => ['required', 'numeric'],
             'warehouse_id' => ['required', 'numeric'],
             'unit_id' => ['required', 'numeric'],
-            'category_id' => ['required', 'numeric'],
-            'sub_category_id' => ['required', 'numeric'],
+            // 'category_id' => ['required', 'numeric'],
+            'sub_category_id' => ['required', 'numeric', new ProductSubCategoryRule],
             'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image'],
             'specs' => ['json', new ProductSpecRule]
         ];

@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = ProductResource::collection(Product::all());
+        $products = ProductResource::collection(Product::all()->load(['sub_category', 'sub_category.category']));
 
         return response()->json(['status' => 'OK', 'data' => compact('products')]);
     }
@@ -99,7 +99,7 @@ class ProductController extends Controller
             ], 404);
         }
 
-        $product = new ProductResource($productModel);
+        $product = new ProductResource($productModel->load(['sub_category', 'sub_category.category']));
 
         return response([
             'status' => 'OK',

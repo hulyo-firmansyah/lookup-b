@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('restrict')->onUpdate('restrict');
             $table->foreignId('warehouse_id')->constrained('warehouses')->onDelete('restrict')->onUpdate('restrict');
             $table->foreignId('unit_id')->constrained('units')->onDelete('restrict')->onUpdate('restrict');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('restrict')->onUpdate('restrict');
+            // $table->foreignId('category_id')->constrained('categories')->onDelete('restrict')->onUpdate('restrict');
             $table->foreignId('sub_category_id')->constrained('sub_categories')->onDelete('restrict')->onUpdate('restrict')->nullable();
             $table->timestamps();
         });

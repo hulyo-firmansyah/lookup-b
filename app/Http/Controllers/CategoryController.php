@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\Data\Category\StoreCategoryRequest;
 use App\Http\Requests\Data\Category\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -16,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = CategoryResource::collection(Category::all()->load('subCategories'));
 
         return response(['status' => 'OK', 'data' => [
             'categories' => $categories
@@ -47,8 +48,8 @@ class CategoryController extends Controller
     public function show(Request $request)
     {
         $id = intval($request->category);
-        $category = Category::find($id);
-        if (!$category) {
+        $categoryModel = Category::find($id);
+        if (!$categoryModel) {
             return response([
                 'status' => false,
                 'message' => 'Category not found',
@@ -57,6 +58,8 @@ class CategoryController extends Controller
                 ]
             ], 404);
         }
+
+        $category = new CategoryResource($categoryModel->load('subCategories'));
 
         return response([
             'status' => 'OK',
