@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Data\SubCategory;
 
 use App\Models\SubCategory;
+use App\Rules\SubCategoryNameRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -56,7 +57,7 @@ class UpdateSubCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('sub_categories')->ignore($this->sub_category)],
+            'name' => ['required', new SubCategoryNameRule($this->category_id, $this->sub_category)],
             // 'details' => ['required']
         ];
     }
