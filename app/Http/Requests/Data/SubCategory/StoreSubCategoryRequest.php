@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Data\SubCategory;
 
+use App\Rules\SubCategoryNameRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -39,7 +40,8 @@ class StoreSubCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', Rule::unique('sub_categories')],
+            'name' => ['required', new SubCategoryNameRule($this->category_id)],
+            'category_id' => ['required', 'numeric']
             // 'details' => ['required']
         ];
     }
