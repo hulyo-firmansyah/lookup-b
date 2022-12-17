@@ -14,6 +14,12 @@ class UnitSeeder extends Seeder
      */
     public function run()
     {
-        Unit::factory(10)->create();
+        $units = ['kg', 'box', 'pcs', 'unit'];
+
+        foreach ($units as $unit) {
+            Unit::create([
+                'name' => $unit
+            ]);
+        }
     }
 }

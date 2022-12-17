@@ -14,6 +14,12 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        Brand::factory(10)->create();
+        $brands = ['Omron', 'BioCare', 'Beurer', 'OneMed', 'Oncoprobe', 'GEA'];
+
+        foreach ($brands as $brand) {
+            Brand::create([
+                'name' => $brand
+            ]);
+        }
     }
 }
