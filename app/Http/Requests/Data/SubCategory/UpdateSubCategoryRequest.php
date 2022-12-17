@@ -58,6 +58,7 @@ class UpdateSubCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', new SubCategoryNameRule($this->category_id, $this->sub_category)],
+            'category_id' => ['required', 'numeric']
             // 'details' => ['required']
         ];
     }

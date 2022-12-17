@@ -15,7 +15,7 @@ class SubCategoryNameRule implements Rule
      *
      * @return void
      */
-    public function __construct(Int $category_id, Int $id = null)
+    public function __construct(Int $category_id, $id = null)
     {
         $this->ci = $category_id;
         $this->sci = $id;
@@ -33,12 +33,15 @@ class SubCategoryNameRule implements Rule
         //looking for same category_id
         //if already same reject
         $sc = SubCategory::where('category_id', $this->ci)->get();
-        $sci = $this->sci;
+        $sci = intval($this->sci);
         $isContain = $sc->contains(function ($v) use ($value, $sci) {
-            if ($sci && $v->id === $sci) {
-                return false;
+            if ($sci) {
+                if ($v->id !== $sci) {
+                    return strtolower($v->name) === strtolower($value);
+                }
+            } else {
+                return strtolower($v->name) === strtolower($value);
             }
-            return strtolower($v->name) === strtolower($value);
         });
 
         return !$isContain;
