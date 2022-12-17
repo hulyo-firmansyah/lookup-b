@@ -14,6 +14,14 @@ class SupplierSeeder extends Seeder
      */
     public function run()
     {
-        Supplier::factory(10)->create();
+        $suppliers = ['PT IHS', 'PT DCA', 'PT Kreasi Sukses Indoprima', 'PT Mitra Tsalasa Jaya', 'PT Satria Saftindo Jaya', 'PT Siantar Usaha Bersama', 'PT Sumber Utama Medicalindo'];
+
+        foreach ($suppliers as $sup) {
+            Supplier::create([
+                'name' => $sup,
+                'phone' => '6285755799604',
+                'address' => 'Malang'
+            ]);
+        }
     }
 }

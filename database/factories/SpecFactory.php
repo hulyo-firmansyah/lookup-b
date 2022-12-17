@@ -14,8 +14,7 @@ class SpecFactory extends Factory
     public function definition()
     {
         return [
-            'spec' => $this->faker->sentence(1),
-            'details' => $this->faker->sentence(3)
+            'spec' => $this->faker->unique()->word()
         ];
     }
 }
