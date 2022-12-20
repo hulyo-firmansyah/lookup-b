@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Spec;
-use App\Http\Requests\StoreSpecRequest;
-use App\Http\Requests\UpdateSpecRequest;
+use App\Http\Requests\Data\ProductSpec\StoreSpecRequest;
+use App\Http\Requests\Data\ProductSpec\UpdateSpecRequest;
 use App\Http\Resources\SpecResource;
 use Illuminate\Http\Request;
 
@@ -32,7 +32,11 @@ class SpecController extends Controller
      */
     public function store(StoreSpecRequest $request)
     {
-        //
+        $spec = Spec::create($request->all());
+
+        return response(['status' => 'OK', 'message' => 'Create spec success', 'data' => [
+            'spec' => $spec
+        ]]);
     }
 
     /**
@@ -72,9 +76,18 @@ class SpecController extends Controller
      * @param  \App\Models\Spec  $spec
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSpecRequest $request, Spec $spec)
+    public function update(UpdateSpecRequest $request)
     {
-        //
+        $id = intval($request->spec);
+        $spec = Spec::find($id);
+        $spec->update([
+            'spec' => $request->spec_name,
+            'details' => $request->details
+        ]);
+
+        return response(['status' => 'OK', 'message' => 'Update spec success', 'data' => [
+            'spec' => $spec
+        ]]);
     }
 
     /**
@@ -83,8 +96,19 @@ class SpecController extends Controller
      * @param  \App\Models\Spec  $spec
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Spec $spec)
+    public function destroy(Request $request)
     {
-        //
+        $id = intval($request->spec);
+        $spec = Spec::find($id);
+        if (!$spec) {
+            return response(['status' => false, 'message' => 'Spec not found', 'data' => [
+                'spec' => null
+            ]], 404);
+        }
+        $spec->delete();
+
+        return response(['status' => 'OK', 'message' => 'Delete spec success', 'data' => [
+            'spec' => $spec
+        ]], 200);
     }
 }
