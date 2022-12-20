@@ -41,7 +41,7 @@ class ProductController extends Controller
         }
 
         // Insert and link images
-        $images = $request->file('images');
+        $images = $request->get('images');
         if ($images) {
             foreach ($images as $img) {
                 $this->storeImage($product->id, $img);
@@ -210,16 +210,21 @@ class ProductController extends Controller
      * @param $id Product id
      * @param $image Image file
      */
-    private function storeImage(Int $id, UploadedFile $image)
+    private function storeImage(Int $id, String $image)
     {
-        $path = Storage::putFile('upload/images/product', $image);
-        $base = explode('.', basename($path));
-        $filename = $base[0];
-        $ext = $base[1];
+        $image = base64_decode($image);
+        $imageName = uniqid() . md5(time());
+
+        $f = finfo_open();
+        $mime = finfo_buffer($f, $image, FILEINFO_MIME_TYPE);
+        $ext = explode("/", $mime)[1];
+
+        $fullPath = 'upload/images/product/' . $imageName . "." . $ext;
+        Storage::put($fullPath, $image);
 
         ProductImage::create([
-            'path' => $path,
-            'filename' => $filename,
+            'path' => $fullPath,
+            'filename' => $imageName,
             'ext' => $ext,
             'product_id' => $id
         ]);

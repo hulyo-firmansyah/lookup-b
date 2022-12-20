@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Data\Product;
 
+use App\Rules\B64ImageRule;
 use App\Rules\ProductSpecRule;
 use App\Rules\ProductSubCategoryRule;
 use Illuminate\Contracts\Validation\Validator;
@@ -52,7 +53,8 @@ class StoreProductRequest extends FormRequest
             'unit_id' => ['required', 'numeric'],
             // 'category_id' => ['required', 'numeric'],
             'sub_category_id' => ['required', 'numeric', new ProductSubCategoryRule],
-            'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image'],
+            // 'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image'],
+            'images.*' => [new B64ImageRule(null, 10240)],
             'specs' => ['json', new ProductSpecRule]
         ];
     }
