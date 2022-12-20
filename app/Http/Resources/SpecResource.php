@@ -15,6 +15,7 @@ class SpecResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'spec' => $this->spec,
             'details' => $this->details,
             'products' => $this->whenLoaded('products')
