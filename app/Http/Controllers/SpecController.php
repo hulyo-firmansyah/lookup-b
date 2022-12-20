@@ -6,6 +6,7 @@ use App\Models\Spec;
 use App\Http\Requests\StoreSpecRequest;
 use App\Http\Requests\UpdateSpecRequest;
 use App\Http\Resources\SpecResource;
+use Illuminate\Http\Request;
 
 class SpecController extends Controller
 {
@@ -40,9 +41,28 @@ class SpecController extends Controller
      * @param  \App\Models\Spec  $spec
      * @return \Illuminate\Http\Response
      */
-    public function show(Spec $spec)
+    public function show(Request $request)
     {
-        //
+        $id = intval($request->spec);
+        $specModel = Spec::find($id);
+        if (!$specModel) {
+            return response([
+                'status' => false,
+                'message' => 'Spec not found',
+                'data' => [
+                    'spec' => null
+                ]
+            ], 404);
+        }
+
+        $spec = new SpecResource($specModel);
+
+        return response([
+            'status' => 'OK',
+            'data' => [
+                'spec' => $spec
+            ]
+        ]);
     }
 
     /**
