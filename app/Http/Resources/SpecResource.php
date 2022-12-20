@@ -16,7 +16,8 @@ class SpecResource extends JsonResource
     {
         return [
             'spec' => $this->spec,
-            'details' => $this->details
+            'details' => $this->details,
+            'products' => $this->whenLoaded('products')
         ];
     }
 }
