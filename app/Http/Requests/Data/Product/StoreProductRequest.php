@@ -54,7 +54,7 @@ class StoreProductRequest extends FormRequest
             // 'category_id' => ['required', 'numeric'],
             'sub_category_id' => ['required', 'numeric', new ProductSubCategoryRule],
             // 'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image'],
-            'images.*' => [new B64ImageRule(null, 10240)],
+            'images.*' => [new B64ImageRule(null, 2040)],
             'specs' => ['json', new ProductSpecRule]
         ];
     }

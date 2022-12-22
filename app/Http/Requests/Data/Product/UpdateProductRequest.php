@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Data\Product;
 
 use App\Models\Product;
+use App\Rules\B64ImageRule;
 use App\Rules\ProductSpecRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -68,7 +69,8 @@ class UpdateProductRequest extends FormRequest
             'unit_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
             'sub_category_id' => ['required', 'numeric'],
-            'images.*' => ['mimes:jpeg,png,bmp,jpg,gif', 'max:10240', 'image'],
+            'del_img_id.*' => ['numeric'],
+            'images.*' => [new B64ImageRule(null, 2040)],
             'specs' => ['json', new ProductSpecRule]
         ];
     }

@@ -125,17 +125,26 @@ class ProductController extends Controller
         $product->update($data);
 
         //Unlink old image
-        foreach ($product->images as $image) {
-            //delete file
-            Storage::delete('upload/images/product/' . $image->filename . '.' . $image->ext);
+        if ($request->has('del_img_id')) {
+            $deletedImages = $request->get('del_img_id');
+            foreach ($deletedImages as $idToDelete) {
+                //Find related images
+                $productImg = ProductImage::find($idToDelete);
+                if ($productImg) {
+                    //delete file
+                    Storage::delete('upload/images/product/' . $productImg->filename . '.' . $productImg->ext);
+                    //delete image record
+                    $productImg->delete();
+                }
+            }
         }
-        //delete all image record
-        $product->images()->delete();
         //Put new image
-        $images = $request->file('images');
-        if ($images) {
-            foreach ($images as $img) {
-                $this->storeImage($id, $img);
+        if ($request->has('images')) {
+            $images = $request->get('images');
+            if ($images) {
+                foreach ($images as $img) {
+                    $this->storeImage($id, $img);
+                }
             }
         }
 
