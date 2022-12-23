@@ -67,7 +67,7 @@ class UpdateProductRequest extends FormRequest
             'supplier_id' => ['required', 'numeric'],
             'warehouse_id' => ['required', 'numeric'],
             'unit_id' => ['required', 'numeric'],
-            'category_id' => ['required', 'numeric'],
+            // 'category_id' => ['required', 'numeric'],
             'sub_category_id' => ['required', 'numeric'],
             'del_img_id.*' => ['numeric'],
             'images.*' => [new B64ImageRule(null, 2040)],
