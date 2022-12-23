@@ -9,6 +9,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\ProductImage;
 use App\Models\ProductSpec;
 use App\Models\Spec;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -192,26 +193,32 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = intval($request->product);
-        $product = Product::find($id);
-        if (!$product) {
-            return response(['status' => false, 'message' => 'Product not found', 'data' => [
-                'product' => null
-            ]], 404);
-        }
-        $productRes = new ProductResource($product);
+        try {
+            $id = intval($request->product);
+            $product = Product::find($id);
+            if (!$product) {
+                return response(['status' => false, 'message' => 'Product not found', 'data' => [
+                    'product' => null
+                ]], 404);
+            }
 
-        $oldImages = $productRes->images;
-        foreach ($oldImages as $image) {
-            //Unlink related images
-            Storage::delete('upload/images/product/' . $image->filename . '.' . $image->ext);
-        }
-        $product->images()->delete();
-        $product->delete();
+            $product->pivotSpec()->delete();
+            $productRes = new ProductResource($product->load('pivotSpec'));
 
-        return response(['status' => 'OK', 'message' => 'Delete product success', 'data' => [
-            'product' => $productRes
-        ]], 200);
+            $oldImages = $productRes->images;
+            foreach ($oldImages as $image) {
+                //Unlink related images
+                Storage::delete('upload/images/product/' . $image->filename . '.' . $image->ext);
+            }
+            $product->images()->delete();
+            $product->delete();
+
+            return response(['status' => 'OK', 'message' => 'Delete product success', 'data' => [
+                'product' => $productRes
+            ]], 200);
+        } catch (QueryException $e) {
+            return response(['status' => false, 'message' => 'Delete product failed.'], 500);
+        }
     }
 
     /**
