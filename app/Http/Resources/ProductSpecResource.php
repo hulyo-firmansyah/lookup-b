@@ -16,9 +16,11 @@ class ProductSpecResource extends JsonResource
     {
         $spec = new SpecResource($this->spec);
         return [
-            'spec' => $spec->spec,
-            'details' => $spec->details,
-            'value' => $this->value
+            'spec' => $spec,
+            'value' => [
+                'id' => $this->id,
+                'value' => $this->value,
+            ]
         ];
     }
 }
