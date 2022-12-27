@@ -1,65 +1,65 @@
 name: Deploy RPK-STOCK-B
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["main"]
 
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  test:
-    name: Testing laravel application | actually not doing anything rn
-    runs-on: ubuntu-latest
-    steps:
-      - name: PWD
-        run: ls -R
+    test:
+        name: Testing laravel application | actually not doing anything rn
+        runs-on: ubuntu-latest
+        steps:
+          - name: PWD
+            run: ls -R
 
-  deploy:
-    name: Deploy to https://api.ptriskyputrakasih.com
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Get latest code
-        uses: actions/checkout@v2
+    deploy:
+        name: Deploy to https://api.ptriskyputrakasih.com
+        runs-on: ubuntu-latest
+        needs: test
+        steps:
+          - name: Get latest code
+            uses: actions/checkout@v2
 
-      - name: Display of file structure
-        run: ls -R
+          - name: Display of file structure
+            run: ls -R
 
-      - name: Sync files to ftp
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
-        with:
-			server: ${{ secrets.FTP_1_HOST }}
-			username: ${{ secrets.FTP_1_USERNAME }}
-			password: ${{ secrets.FTP_1_PASSWORD }}
-			server-dir: /
-			exclude: |
-				/node_modules/**
-				README.md
-				/public/hot/**
-				/public/storage/**
-				/storage/*.key
-				/vendor
-				.env
-				.env.backup
-				.phpunit.result.cache
-				Homestead.json
-				Homestead.yaml
-				npm-debug.log
-				yarn-error.log
+          - name: Sync files to ftp
+            uses: SamKirkland/FTP-Deploy-Action@4.3.3
+            with:
+                server: ${{ secrets.FTP_1_HOST }}
+                username: ${{ secrets.FTP_1_USERNAME }}
+                password: ${{ secrets.FTP_1_PASSWORD }}
+                server-dir: /
+                exclude: |
+                    /node_modules/**
+                    README.md
+                    /public/hot/**
+                    /public/storage/**
+                    /storage/*.key
+                    /vendor
+                    .env
+                    .env.backup
+                    .phpunit.result.cache
+                    Homestead.json
+                    Homestead.yaml
+                    npm-debug.log
+                    yarn-error.log
 
-      - name: Execute remote ssh
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            whoami
-            pwd
-            cd public_html/api.ptriskyputrakasih.com 
-            ls
-            pwd
+          - name: Execute remote ssh
+            uses: appleboy/ssh-action@v0.1.6
+            with:
+              host: ${{ secrets.SSH_HOST }}
+              username: ${{ secrets.SSH_USERNAME }}
+              passphrase: ${{ secrets.SSH_PASSPHRASE }}
+              port: ${{ secrets.SSH_PORT }}
+              key: ${{ secrets.SSH_KEY }}
+              script: |
+                whoami
+                pwd
+                cd public_html/api.ptriskyputrakasih.com 
+                ls
+                pwd
