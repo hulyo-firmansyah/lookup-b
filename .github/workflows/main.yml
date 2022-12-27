@@ -61,4 +61,3 @@ jobs:
           script: |
             whoami
             pwd
-            ls -R
