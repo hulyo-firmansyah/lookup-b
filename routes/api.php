@@ -23,9 +23,15 @@ use App\Http\Controllers\WarehouseController;
 |
 */
 
-Route::post('/login', [UserAuthController::class, 'login']);
+Route::middleware('api')->get('/login', function () {
+    return abort(403);
+});
+Route::middleware('api')->post('/login', [UserAuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('/logout', function () {
+        return abort(403);
+    });
     Route::post('/logout', [UserAuthController::class, 'logout']);
 
     // Route::prefix('suppliers')->group(function () {
