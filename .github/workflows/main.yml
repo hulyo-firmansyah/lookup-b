@@ -61,3 +61,7 @@ jobs:
           script: |
             whoami
             pwd
+			cd public_html/api.ptriskyputrakasih.com/
+			pwd
+			echo "=="
+			ls
