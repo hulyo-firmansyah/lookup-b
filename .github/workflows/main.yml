@@ -65,3 +65,5 @@ jobs:
                 cd public_html/api.ptriskyputrakasih.com 
                 ls
                 pwd
+                composer install
+                php artisan migrate
