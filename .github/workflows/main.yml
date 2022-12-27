@@ -65,5 +65,7 @@ jobs:
                 cd public_html/api.ptriskyputrakasih.com 
                 ls
                 pwd
+                echo "Installing deps"
                 composer install
-                php artisan migrate
+                echo "Migrate database"
+                php artisan migrate --force
