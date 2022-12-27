@@ -27,6 +27,28 @@ jobs:
       - name: Display of file structure
         run: ls -R
 
+      - name: Sync files to ftp
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+			server: ${{ secrets.FTP_1_HOST }}
+			username: ${{ secrets.FTP_1_USERNAME }}
+			password: ${{ secrets.FTP_1_PASSWORD }}
+			server-dir: /
+			exclude: |
+				/node_modules/**
+				README.md
+				/public/hot/**
+				/public/storage/**
+				/storage/*.key
+				/vendor
+				.env
+				.env.backup
+				.phpunit.result.cache
+				Homestead.json
+				Homestead.yaml
+				npm-debug.log
+				yarn-error.log
+
       - name: Execute remote ssh
         uses: appleboy/ssh-action@v0.1.6
         with:
