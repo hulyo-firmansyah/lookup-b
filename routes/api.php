@@ -1,7 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SpecController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +23,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [UserAuthController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [UserAuthController::class, 'logout']);
+
+    // Route::prefix('suppliers')->group(function () {
+    //     // Route::get('/', [SupplierController::class, 'index']);
+    //     // Route::get('/{id}', [SupplierController::class, 'show']);
+
+    //CRUD DATA
+    Route::apiResource('suppliers', SupplierController::class);
+    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('brands', BrandController::class);
+    Route::apiResource('warehouses', WarehouseController::class);
+    Route::apiResource('sub-categories', SubCategoryController::class);
+    Route::apiResource('units', UnitController::class);
+    Route::apiResource('products/specs', SpecController::class);
+    Route::apiResource('products', ProductController::class);
+    Route::apiResource('users', UserController::class);
+
+    // });
 });

@@ -6,10 +6,26 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            //Bypass email verification
+            $model->email_verified_at = now();
+        });
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role'
     ];
 
     /**
@@ -37,4 +53,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Determeni if user is dev
+     */
+    public function isDev()
+    {
+        return $this->role === 'dev' ? true : false;
+    }
+
+    /**
+     * Determeni if user is owner
+     */
+    public function isOwner()
+    {
+        return $this->role === 'owner' ? true : false;
+    }
+
+    /**
+     * Determeni if user is admin
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin' ? true : false;
+    }
 }
