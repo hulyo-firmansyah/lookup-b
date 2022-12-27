@@ -40,3 +40,4 @@ jobs:
             pwd
             cd public_html/api.ptriskyputrakasih.com 
             ls
+            pwd
