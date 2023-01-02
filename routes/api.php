@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SpecController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
@@ -48,6 +49,10 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('products/specs', SpecController::class);
     Route::apiResource('products', ProductController::class);
     Route::apiResource('users', UserController::class);
+
+    Route::prefix('stats')->group(function () {
+        Route::get('/count', [StatsController::class, 'count']);
+    });
 
     // });
 });
