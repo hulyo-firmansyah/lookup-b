@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class WrImageSeeder extends Seeder
+class WhImageSeeder extends Seeder
 {
     /**
      * Run the database seeds.
