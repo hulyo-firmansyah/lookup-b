@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCTGeneralInfosTable extends Migration
+class CreateCTGeneralInfoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,9 +17,9 @@ class CreateCTGeneralInfosTable extends Migration
             $table->id();
             $table->foreignId('contact_id')->constrained('contacts')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('noun', ['0', '1', '2'])->nullable();
-            $table->string('first_name', 100)->nullable();
-            $table->string('middle_name', 100)->nullable();
-            $table->string('last_name', 100)->nullable();
+            $table->string('first_name', 50)->nullable();
+            $table->string('middle_name', 50)->nullable();
+            $table->string('last_name', 50)->nullable();
             $table->enum('identity', ['ktp', 'sim', 'passport', 'others'])->nullable();
             $table->string('identity_number', 50)->nullable();
             $table->string('company_name', 100)->nullable();
