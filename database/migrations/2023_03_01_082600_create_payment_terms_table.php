@@ -16,7 +16,7 @@ class CreatePaymentTermsTable extends Migration
         Schema::create('payment_terms', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->integer('time_period', 6);
+            $table->integer('time_period');
             $table->timestamps();
         });
     }
