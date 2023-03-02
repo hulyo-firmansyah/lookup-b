@@ -15,6 +15,8 @@ class CreatePPrcReqTagsTable extends Migration
     {
         Schema::create('p_prc_req_tag', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pr_id')->constrained('purchase_requests')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('tag_id')->constrained('tags')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
     }
