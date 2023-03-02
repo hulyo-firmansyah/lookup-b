@@ -16,7 +16,7 @@ class CreatePPrcReqPrdTable extends Migration
         Schema::create('p_prc_req_prd', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('restrict')->onUpdate('restrict');
-            $table->foreignId('transaction_id')->constrained('purchase_requests')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('transaction_id')->constrained('purchase_requests')->onDelete('restrict')->onUpdate('restrict');
             $table->integer('qty');
             $table->timestamps();
         });
