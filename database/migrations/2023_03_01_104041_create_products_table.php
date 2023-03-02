@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name', 100)->unique();
             $table->string('code', 50)->unique()->nullable();
+            $table->string('brand', 30)->nullable();
             $table->text('description')->nullable();
             $table->foreignId('unit_id')->constrained('prd_units')->onDelete('restrict')->onUpdate('restrict');
             $table->bigInteger('buy_price');
