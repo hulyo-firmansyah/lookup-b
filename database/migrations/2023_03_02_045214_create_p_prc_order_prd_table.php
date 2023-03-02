@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePPrcOfferPrdTable extends Migration
+class CreatePPrcOrderPrdTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePPrcOfferPrdTable extends Migration
      */
     public function up()
     {
-        Schema::create('p_prc_offer_prd', function (Blueprint $table) {
+        Schema::create('p_prc_order_prd', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('restrict')->onUpdate('restrict');
-            $table->foreignId('transaction_id')->constrained('purchase_offers')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreignId('transaction_id')->constrained('purchase_orders')->onDelete('restrict')->onUpdate('restrict');
             $table->integer('qty')->default(0);
             $table->foreignId('tax_id')->nullable()->constrained('taxes')->onDelete('restrict')->onUpdate('restrict');
             $table->bigInteger('purchase_price')->nullable();
@@ -33,6 +33,6 @@ class CreatePPrcOfferPrdTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('p_prc_offer_prd');
+        Schema::dropIfExists('p_prc_order_prd');
     }
 }
