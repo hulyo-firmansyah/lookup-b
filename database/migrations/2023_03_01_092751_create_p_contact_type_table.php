@@ -15,7 +15,7 @@ class CreatePContactTypeTable extends Migration
     {
         Schema::create('p_contact_type', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 50);
+            $table->string('code', 50)->unique();
             $table->foreignId('contact_id')->nullable()->constrained('contacts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('contact_type_id')->constrained('contact_types')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();

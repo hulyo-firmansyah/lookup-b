@@ -15,7 +15,7 @@ class CreateWhSegmentsTable extends Migration
     {
         Schema::create('wh_segments', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 20)->nullable();
+            $table->string('code', 20)->unique()->nullable();
             $table->text('image_path')->nullable();
             $table->string('name', 100);
             $table->text('details')->nullable();
